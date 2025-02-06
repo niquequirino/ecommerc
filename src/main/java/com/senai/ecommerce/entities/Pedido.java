@@ -1,13 +1,19 @@
 package com.senai.ecommerce.entities;
 
 import java.time.Instant;
-
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import com.senai.ecommerce.enums.StatusdoPedido;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +25,17 @@ public class Pedido {
 	private Long id;
 	private Instant momento;
 	private StatusdoPedido status;
+	
+	@ManyToOne
+	@JoinColumn(name = "cliente-id")
+	private Usuario cliente;
+	
+	@OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
+	private Pagamento pagamento;
+	
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemDoPedido> items = new HashSet<>();
+	
 	public Pedido(Long id, Instant momento, StatusdoPedido status) {
 		this.id = id;
 		this.momento = momento;
@@ -46,7 +63,14 @@ public class Pedido {
 	public void setStatus(StatusdoPedido status) {
 		this.status = status;
 	}
-	
-	
+	public Usuario getCliente() {
+		return cliente;
+	}
+	public void setCliente(Usuario cliente) {
+		this.cliente = cliente;
+	}
+	public List<Produto> getProduto(){
+		return items.stream().map(x -> x.getProduto()).toList();
+	}
 
 }

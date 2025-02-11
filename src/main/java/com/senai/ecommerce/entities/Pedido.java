@@ -27,7 +27,7 @@ public class Pedido {
 	private StatusdoPedido status;
 	
 	@ManyToOne
-	@JoinColumn(name = "cliente-id")
+	@JoinColumn(name = "cliente_id")
 	private Usuario cliente;
 	
 	@OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)

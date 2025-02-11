@@ -3,6 +3,8 @@ package com.senai.ecommerce.entities;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,9 +23,17 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	
+	@Column(columnDefinition = "TEXT")
+	
 	private String descricao;
 	private Double preco;
+	
+	@Column(columnDefinition = "TEXT")
+	
 	private String imgUrl;
+
+	
 	
 	@ManyToMany
 	@JoinTable(name = "tb_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"),
